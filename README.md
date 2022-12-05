@@ -27,6 +27,8 @@ npm run dev
 
 The server defaults to port 3000.
 
+Requests are received at the `/` endpoint.
+
 It expects request data to follow these rules:
 - each request should have a commuterID which is prefixed with COM- and followed by
 a positive integer
