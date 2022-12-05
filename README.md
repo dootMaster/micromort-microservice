@@ -70,4 +70,4 @@ Here is an example of valid data:
 }
 ```
 
-Requests that don't follow these rules will receive a `400 Bad Request` error followed by a relevant description of what might have gone wrong.
+Requests that don't follow these rules will receive a `400 Bad Request` error followed by a description of what might have gone wrong.
