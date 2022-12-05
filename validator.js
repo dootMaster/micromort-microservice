@@ -21,9 +21,10 @@ const invalidTopLevelKeys = (data) => {
   return false;
 }
 
-const actionValidator = (index, actionObj, date, timestampRegex) => {
+const actionValidator = (index, actionObj, sameDayDate) => {
   const { ts, action, unit, quantity } = actionObj;
   const keys = Object.keys(actionObj);
+  const timestampRegex = /^(19|20)\d\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01]) ([01]?\d|2[0-3]):([0-5][0-9]):([0-5][0-9])$/
 
   const testList = [
     {
@@ -35,7 +36,7 @@ const actionValidator = (index, actionObj, date, timestampRegex) => {
       message: `Invalid timestamp at actions index ${index}.`
     },
     {
-      test: ts.slice(0, 10) === date,
+      test: ts.slice(0, 10) === sameDayDate,
       message: 'Actions are not all on the same day.'
     },
     {
@@ -64,15 +65,13 @@ const invalidActions = (actions) => {
   if(!actions) {
     return 'Actions array is empty.';
   }
-  const timestampRegex = /^(19|20)\d\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01]) ([01]?\d|2[0-3]):([0-5][0-9]):([0-5][0-9])$/
-  const firstTimestamp = actions[0].ts;
-  if(!firstTimestamp || !timestampRegex.test(firstTimestamp)) {
-    return 'Timestamp from action index 0 is invalid.';
+  if(!actions[0].ts) {
+    return 'Invalid timestamp at actions index 0.'
   }
-  const date = actions[0].ts.slice(0, 10);
+  let sameDayDate = actions[0].ts.slice(0, 10);
 
   for(const [index, actionObj] of actions.entries()) {
-    const actionValidatorErrorMessage = actionValidator(index, actionObj, date, timestampRegex);
+    const actionValidatorErrorMessage = actionValidator(index, actionObj, sameDayDate);
     if(actionValidatorErrorMessage) {
       return actionValidatorErrorMessage;
     }
