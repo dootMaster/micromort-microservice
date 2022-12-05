@@ -12,7 +12,7 @@ describe('Micromort Microservice should', () => {
       .post('/')
       .send(COM1)
       .expect(200)
-      .then((res) => {
+      .then(res => {
         expect(res.body).toBeTruthy();
         expect(res.body.commuterID).toBe(COM1.commuterID)
         expect(res.body.micromorts).toBe(10);
@@ -24,7 +24,7 @@ describe('Micromort Microservice should', () => {
       .post('/')
       .send(COM42)
       .expect(200)
-      .then((res) => {
+      .then(res => {
         expect(res.body).toBeTruthy();
         expect(res.body.commuterID).toBe(COM42.commuterID)
         expect(res.body.micromorts).toBe(105124);
@@ -36,7 +36,7 @@ describe('Micromort Microservice should', () => {
       .post('/')
       .send(COM64)
       .expect(200)
-      .then((res) => {
+      .then(res => {
         expect(res.body).toBeTruthy();
         expect(res.body.commuterID).toBe(COM64.commuterID)
         expect(res.body.micromorts).toBe(90);
@@ -48,6 +48,9 @@ describe('Micromort Microservice should', () => {
       .post('/')
       .send(badData.invalidTopLevelKey)
       .expect(400)
+      .then(res => {
+        expect(res.text).toBe('400 Bad Request: Invalid top level key.')
+      })
   })
 
   test('respond with 400 Bad Request when data has duplicate key.', async () => {
@@ -55,6 +58,9 @@ describe('Micromort Microservice should', () => {
       .post('/')
       .send(badData.duplicateKey)
       .expect(400)
+      .then(res => {
+        expect(res.text).toBe('400 Bad Request: Invalid top level key.')
+      })
   })
 
   test('respond with 400 Bad Request when data has invalid commuterID.', async () => {
@@ -62,6 +68,9 @@ describe('Micromort Microservice should', () => {
       .post('/')
       .send(badData.invalidCommuterID)
       .expect(400)
+      .then(res => {
+        expect(res.text).toBe('400 Bad Request: Invalid CommuterID.')
+      })
   })
 
   test('respond with 400 Bad Request when data is missing action key.', async () => {
@@ -69,6 +78,9 @@ describe('Micromort Microservice should', () => {
       .post('/')
       .send(badData.missingActionKey)
       .expect(400)
+      .then(res => {
+        expect(res.text).toBe('400 Bad Request: Invalid keys in action property at index 0.')
+      })
   })
 
   test('respond with 400 Bad Request when actions are not all on the same day.', async () => {
@@ -76,6 +88,9 @@ describe('Micromort Microservice should', () => {
       .post('/')
       .send(badData.notSameDay)
       .expect(400)
+      .then(res => {
+        expect(res.text).toBe('400 Bad Request: Actions are not all on the same day.')
+      })
   })
 
   test('respond with 400 Bad Request when property \'actions.action\' is not of type string.', async () => {
@@ -83,6 +98,9 @@ describe('Micromort Microservice should', () => {
       .post('/')
       .send(badData.actionNotString)
       .expect(400)
+      .then(res => {
+        expect(res.text).toBe('400 Bad Request: Action is not of type string at actions index 0.')
+      })
   })
 
   test('respond with 400 Bad Request when unit is not one of mile, floor, minute, or quantity.', async () => {
@@ -90,6 +108,9 @@ describe('Micromort Microservice should', () => {
       .post('/')
       .send(badData.invalidUnit)
       .expect(400)
+      .then(res => {
+        expect(res.text).toBe('400 Bad Request: Unit is not one of mile, floor, minute, or quantity at actions index 0.')
+      })
   })
 
   test('respond with 400 Bad Request when actions array has duplicate key.', async () => {
@@ -97,6 +118,9 @@ describe('Micromort Microservice should', () => {
       .post('/')
       .send(badData.duplicateActionKey)
       .expect(400)
+      .then(res => {
+        expect(res.text).toBe('400 Bad Request: Invalid keys in action property at index 0.')
+      })
   })
 
   test('respond with 400 Bad Request when actions property is not an array.', async () => {
@@ -104,6 +128,9 @@ describe('Micromort Microservice should', () => {
       .post('/')
       .send(badData.actionsNotArray)
       .expect(400)
+      .then(res => {
+        expect(res.text).toBe('400 Bad Request: Actions property must be an array.')
+      })
   })
 
   test('respond with 400 Bad Request when timestamp doesn\'t have correct formatting.', async () => {
@@ -111,6 +138,9 @@ describe('Micromort Microservice should', () => {
       .post('/')
       .send(badData.invalidTimestamp)
       .expect(400)
+      .then(res => {
+        expect(res.text).toBe('400 Bad Request: Invalid timestamp at actions index 0.')
+      })
   })
 
   test('respond with 400 Bad Request when quantity is string, even if it\'s a number.', async () => {
@@ -118,6 +148,9 @@ describe('Micromort Microservice should', () => {
       .post('/')
       .send(badData.invalidQuantityAsString)
       .expect(400)
+      .then(res => {
+        expect(res.text).toBe('400 Bad Request: Invalid quantity at index 0. Must be number type positive integer.')
+      })
   })
 
   test('respond with 400 Bad Request when quantity is an invalid number.', async () => {
@@ -125,6 +158,9 @@ describe('Micromort Microservice should', () => {
       .post('/')
       .send(badData.invalidQuantityNumber)
       .expect(400)
+      .then(res => {
+        expect(res.text).toBe('400 Bad Request: Invalid quantity at index 0. Must be number type positive integer.')
+      })
   })
 
   test('respond with 400 Bad Request when data is nonexistent.', async () => {
@@ -132,6 +168,9 @@ describe('Micromort Microservice should', () => {
       .post('/')
       .send(badData.noData)
       .expect(400)
+      .then(res => {
+        expect(res.text).toBe('400 Bad Request: Request did not contain data.')
+      })
   })
 
   test('respond with 400 Bad Request when actions array is empty.', async () => {
@@ -139,5 +178,8 @@ describe('Micromort Microservice should', () => {
       .post('/')
       .send(badData.noActions)
       .expect(400)
+      .then(res => {
+        expect(res.text).toBe('400 Bad Request: Actions array is empty.')
+      })
   })
 })

@@ -1,5 +1,5 @@
 const invalidTopLevelKeys = (data) => {
-  if(!data) {
+  if(!Object.keys(data).length) {
     return 'Request did not contain data.';
   }
   const keys = Object.keys(data);
