@@ -72,7 +72,7 @@ const invalidActions = (actions: IActions[]): string => {
   if(!actions[0].ts) {
     return 'Invalid timestamp at actions index 0.'
   }
-  let sameDayDate = actions[0].ts.slice(0, 10);
+  let sameDayDate: string = actions[0].ts.slice(0, 10);
 
   for(const [index, actionObj] of actions.entries()) {
     const actionValidatorErrorMessage = actionValidator(index, actionObj, sameDayDate);
@@ -85,7 +85,7 @@ const invalidActions = (actions: IActions[]): string => {
 }
 
 const validator = (req: Request, res: Response, next: NextFunction): void => {
-  const data = req.body;
+  const data: IData = req.body;
 
   const validationFailedAtTopLevelKeys = invalidTopLevelKeys(data);
   if(!!validationFailedAtTopLevelKeys) {

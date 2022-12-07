@@ -9,8 +9,8 @@ app.use(express.json());
 app.use(validator);
 
 app.post('/', (req: Request, res: Response) => {
-  const commuterID = req.body.commuterID
-  const micromorts = micromortModel(req.body);
+  const commuterID: string = req.body.commuterID
+  const micromorts: number = micromortModel(req.body);
 
   res.status(200).send({
     commuterID,
