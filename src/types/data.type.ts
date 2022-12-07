@@ -1,9 +1,9 @@
 export interface IData {
   commuterID: string;
-  actions: IActions[]
+  actions: IAction[]
 }
 
-export interface IActions {
+export interface IAction {
   ts: string;
   action: string;
   unit: string;

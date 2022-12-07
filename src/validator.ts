@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-import { IData, IActions, IEntry } from "./types/data.type";
+import { IData, IAction, IEntry } from "./types/data.type";
 
 const invalidTopLevelKeys = (data: IData): string => {
   if(!Object.keys(data).length) {
@@ -25,7 +25,7 @@ const invalidTopLevelKeys = (data: IData): string => {
   return '';
 }
 
-const actionValidator = (index: number, actionObj: IActions, sameDayDate: string): string => {
+const actionValidator = (index: number, actionObj: IAction, sameDayDate: string): string => {
   const { ts, action, unit, quantity } = actionObj;
   const keys = Object.keys(actionObj);
   const timestampRegex = /^(19|20)\d\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01]) ([01]?\d|2[0-3]):([0-5][0-9]):([0-5][0-9])$/
@@ -65,7 +65,7 @@ const actionValidator = (index: number, actionObj: IActions, sameDayDate: string
   return '';
 }
 
-const invalidActions = (actions: IActions[]): string => {
+const invalidActions = (actions: IAction[]): string => {
   if(!actions) {
     return 'Actions array is empty.';
   }
