@@ -10,6 +10,16 @@ npm install
 
 ## Usage
 
+Start development environment:
+```bash
+npm run dev
+```
+
+Transpile TypeScript:
+```bash
+npm run build
+```
+
 Start server:
 ```bash
 npm start
@@ -20,14 +30,11 @@ Run unit tests:
 npm run test
 ```
 
-Start development environment:
-```bash
-npm run dev
-```
+
 
 The server defaults to port 3000.
 
-Requests are received at the `/` endpoint.
+Requests are received at the `<HOSTNAME>/` endpoint. For example, `localhost:3000/`.
 
 It expects request data to follow these rules:
 - each request should have a commuterID which is prefixed with COM- and followed by
