@@ -34,7 +34,7 @@ npm run test
 
 The server defaults to port 3000.
 
-Requests are received at the `<HOSTNAME>/` endpoint. For example, `localhost:3000/`.
+Requests are received at the `/` endpoint. Example: `localhost:3000/`.
 
 It expects request data to follow these rules:
 - each request should have a commuterID which is prefixed with COM- and followed by
