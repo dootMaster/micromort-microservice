@@ -1,10 +1,10 @@
-const request = require('supertest');
+import request from 'supertest';
 
-const app = require('../app');
-const COM1 = require('../commuterData/com-1.json');
-const COM42 = require('../commuterData/com-42.json');
-const COM64 = require('../commuterData/com-64.json');
-const badData = require('../commuterData/badData');
+import app from '../app'
+import COM1 from '../commuterData/com-1.json';
+import COM42 from '../commuterData/com-42.json';
+import COM64 from '../commuterData/com-64.json';
+import badData from '../commuterData/badData';
 
 describe('Micromort Microservice should', () => {
   test('respond with correct value given COM-1 data.', async () => {
@@ -47,16 +47,6 @@ describe('Micromort Microservice should', () => {
     await request(app)
       .post('/')
       .send(badData.invalidTopLevelKey)
-      .expect(400)
-      .then(res => {
-        expect(res.text).toBe('400 Bad Request: Invalid top level key.')
-      })
-  })
-
-  test('respond with 400 Bad Request when data has duplicate key.', async () => {
-    await request(app)
-      .post('/')
-      .send(badData.duplicateKey)
       .expect(400)
       .then(res => {
         expect(res.text).toBe('400 Bad Request: Invalid top level key.')
@@ -110,16 +100,6 @@ describe('Micromort Microservice should', () => {
       .expect(400)
       .then(res => {
         expect(res.text).toBe('400 Bad Request: Unit is not one of mile, floor, minute, or quantity at actions index 0.')
-      })
-  })
-
-  test('respond with 400 Bad Request when actions array has duplicate key.', async () => {
-    await request(app)
-      .post('/')
-      .send(badData.duplicateActionKey)
-      .expect(400)
-      .then(res => {
-        expect(res.text).toBe('400 Bad Request: Invalid keys in action property at index 0.')
       })
   })
 

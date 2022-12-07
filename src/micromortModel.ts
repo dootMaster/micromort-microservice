@@ -1,4 +1,6 @@
-const micromortModel = (data) => {
+import { IData } from "./types/data.type";
+
+const micromortModel = (data: IData) => {
   switch(data.commuterID) {
     case 'COM-1':
       return 10;
@@ -11,4 +13,4 @@ const micromortModel = (data) => {
   }
 }
 
-module.exports = micromortModel;
+export default micromortModel;

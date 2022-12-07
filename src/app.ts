@@ -1,14 +1,14 @@
-const express = require('express');
+import express, { Express, Request, Response } from 'express';
 
-const validator = require('./validator');
-const micromortModel = require('./micromortModel');
+import validator from './validator';
+import micromortModel from './micromortModel';
 
-const app = express();
+const app: Express = express();
 
 app.use(express.json());
 app.use(validator);
 
-app.post('/', (req, res) => {
+app.post('/', (req: Request, res: Response) => {
   const commuterID = req.body.commuterID
   const micromorts = micromortModel(req.body);
 
@@ -18,4 +18,4 @@ app.post('/', (req, res) => {
   });
 });
 
-module.exports = app;
+export default app;

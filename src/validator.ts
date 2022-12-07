@@ -1,4 +1,8 @@
-const invalidTopLevelKeys = (data) => {
+import { Request, Response, NextFunction } from "express";
+
+import { IData, IActions, IEntry } from "./types/data.type";
+
+const invalidTopLevelKeys = (data: IData): string => {
   if(!Object.keys(data).length) {
     return 'Request did not contain data.';
   }
@@ -18,15 +22,15 @@ const invalidTopLevelKeys = (data) => {
   if(!data.actions.length) {
     return 'Actions array is empty.';
   }
-  return false;
+  return '';
 }
 
-const actionValidator = (index, actionObj, sameDayDate) => {
+const actionValidator = (index: number, actionObj: IActions, sameDayDate: string): string => {
   const { ts, action, unit, quantity } = actionObj;
   const keys = Object.keys(actionObj);
   const timestampRegex = /^(19|20)\d\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01]) ([01]?\d|2[0-3]):([0-5][0-9]):([0-5][0-9])$/
 
-  const testList = [
+  const testList: IEntry[] = [
     {
       test: keys.every(key => ['ts', 'action', 'unit', 'quantity'].includes(key)) && keys.length === 4,
       message: `Invalid keys in action property at index ${index}.`
@@ -48,7 +52,7 @@ const actionValidator = (index, actionObj, sameDayDate) => {
       message: `Unit is not one of mile, floor, minute, or quantity at actions index ${index}.`
     },
     {
-      test: typeof quantity === 'number' && quantity !== NaN && quantity > 0,
+      test: typeof quantity === 'number' && quantity > 0,
       message: `Invalid quantity at index ${index}. Must be number type positive integer.`
     },
   ]
@@ -58,10 +62,10 @@ const actionValidator = (index, actionObj, sameDayDate) => {
       return entry.message;
     }
   }
-  return false;
+  return '';
 }
 
-const invalidActions = (actions) => {
+const invalidActions = (actions: IActions[]): string => {
   if(!actions) {
     return 'Actions array is empty.';
   }
@@ -77,23 +81,23 @@ const invalidActions = (actions) => {
     }
   }
 
-  return false;
+  return '';
 }
 
-const validator = (req, res, next) => {
+const validator = (req: Request, res: Response, next: NextFunction): void => {
   const data = req.body;
 
   const validationFailedAtTopLevelKeys = invalidTopLevelKeys(data);
-  if(validationFailedAtTopLevelKeys) {
+  if(!!validationFailedAtTopLevelKeys) {
     res.status(400).send(`400 Bad Request: ${validationFailedAtTopLevelKeys}`);
     return;
   }
   const validationFailedAtActions = invalidActions(data.actions);
-  if(validationFailedAtActions) {
+  if(!!validationFailedAtActions) {
     res.status(400).send(`400 Bad Request: ${validationFailedAtActions}`);
     return;
   }
   next();
 };
 
-module.exports = validator;
+export default validator;

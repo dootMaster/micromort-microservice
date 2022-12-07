@@ -8,16 +8,6 @@ const invalidTopLevelKey = {
 	}]
 };
 
-const duplicateKey = {
-	"actions": "COM-1",
-	"actions": [{
-		"ts": "2022-02-01 8:40:00",
-		"action": 'walk',
-		"unit": "mile",
-		"quantity": 2
-	}]
-};
-
 const invalidCommuterID = {
 	"commuterID": "COMMUTER-1a",
 	"actions": [{
@@ -86,16 +76,6 @@ const invalidUnit = {
 	}]
 };
 
-const duplicateActionKey = {
-	"commuterID": "COM-1",
-	"actions": [{
-		"ts": "2022-02-01 8:40:00",
-		"ts": "touched thermostat",
-		"unit": "quantity",
-		"quantity": 1
-	}]
-};
-
 const actionsNotArray = {
 	"commuterID": "COM-1",
 	"actions": {
@@ -143,15 +123,13 @@ const noActions = {
 	"actions": []
 }
 
-module.exports = {
+export default {
   invalidTopLevelKey,
-  duplicateKey,
   invalidCommuterID,
   missingActionKey,
   notSameDay,
   actionNotString,
   invalidUnit,
-  duplicateActionKey,
   actionsNotArray,
   invalidTimestamp,
   invalidQuantityAsString,
