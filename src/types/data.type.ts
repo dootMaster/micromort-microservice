@@ -10,7 +10,7 @@ export interface IAction {
   quantity: number;
 }
 
-export interface IEntry {
+export interface ITestCase {
   test: boolean;
   message: string;
 }

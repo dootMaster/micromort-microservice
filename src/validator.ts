@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-import { IData, IAction, IEntry } from "./types/data.type";
+import { IData, IAction, ITestCase } from "./types/data.type";
 
 const invalidTopLevelKeys = (data: IData): string => {
   if(!Object.keys(data).length) {
@@ -30,7 +30,7 @@ const actionValidator = (index: number, actionObj: IAction, sameDayDate: string)
   const keys = Object.keys(actionObj);
   const timestampRegex = /^(19|20)\d\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01]) ([01]?\d|2[0-3]):([0-5][0-9]):([0-5][0-9])$/
 
-  const testList: IEntry[] = [
+  const testList: ITestCase[] = [
     {
       test: keys.every(key => ['ts', 'action', 'unit', 'quantity'].includes(key)) && keys.length === 4,
       message: `Invalid keys in action property at index ${index}.`
